@@ -44,12 +44,13 @@ app.use("/scripts", express.static(fsutils.getScriptsDirPath()));
 
 app.get("/getscripts", async (req, res) => {
     res.send(
-        JSON.stringify(new Map(
-            (await fsutils.getScriptAddresses()).map((script) => [
-                script,
-                `https://${host}:${port}/scripts/${script}`,
-            ])
-        ))
+        (await fsutils.getScriptAddresses()).reduce(
+            (acc, cur) => ({
+                ...acc,
+                [cur]: `https://${host}:${port}/scripts/${cur}`,
+            }),
+            {}
+        )
     );
 });
 
