@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dockerize": "docker build . -t node-cc-reactor-server",
-    "docker": "docker run -it --init -v cc-server-scripts:/usr/src/app/scripts -p 80:3000 --name cc-reactor-server node-cc-reactor-server",
+    "docker": "docker run -it --init -v cc-server-scripts:/usr/src/app/scripts -p 443:3000 --name cc-reactor-server node-cc-reactor-server",
     "restart-docker": "sudo docker stop cc-reactor-server && sudo docker rm cc-reactor-server && sudo npm run dockerize && sudo npm run docker",
     "start": "node build/app.js"
   },
