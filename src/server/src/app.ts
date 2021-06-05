@@ -21,7 +21,11 @@ const rateLimiter = new RateLimiterMemory({
     duration: 1,
 });
 
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: {
+        reportOnly: true
+    }
+}));
 app.use(cors());
 app.use((req, res, next) => {
     console.log("Received request");
