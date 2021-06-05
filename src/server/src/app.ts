@@ -13,6 +13,7 @@ const apiKey = fsutils.getApiKey();
 const httpsCredentials = {
     key: fsutils.getHttpsCredential("privkey.pem"),
     cert: fsutils.getHttpsCredential("cert.pem"),
+    ca: fsutils.getHttpsCredential("chain.pem"),
 };
 
 const rateLimiter = new RateLimiterMemory({
@@ -21,11 +22,7 @@ const rateLimiter = new RateLimiterMemory({
     duration: 1,
 });
 
-app.use(helmet({
-    contentSecurityPolicy: {
-        reportOnly: true
-    }
-}));
+app.use(helmet());
 app.use(cors());
 app.use((req, res, next) => {
     console.log("Received request");
