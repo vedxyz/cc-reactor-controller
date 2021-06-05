@@ -1,0 +1,12 @@
+{
+    "Lua.diagnostics.globals": [
+        "peripheral",
+        "colors",
+        "shell",
+        "term",
+        "paintutils"
+    ],
+    "Lua.diagnostics.disable": [
+        "trailing-space"
+    ]
+}
