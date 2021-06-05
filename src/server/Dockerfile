@@ -11,5 +11,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-USER node
 CMD [ "node", "build/app.js" ]
