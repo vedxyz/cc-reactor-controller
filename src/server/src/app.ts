@@ -48,7 +48,7 @@ app.post("/savescript", (req, res) => {
     } else {
         const [type, credentials] = [...req.headers.authorization.split(" ")];
 
-        if (type.toLowerCase() !== "basic" || credentials !== apiKey) {
+        if (type.toLowerCase() !== "bearer" || credentials !== apiKey) {
             res.status(403).send("Forbidden");
             return;
         }
