@@ -27,7 +27,7 @@ const getScriptsDirPath = (): string => {
 }
 
 const getApiKey = (): string => {
-    return JSON.parse(readFileSync(path.join(__dirname, "apikey.json"), "utf8")).api_key;
+    return JSON.parse(readFileSync(path.join(__dirname, "..", "certificates", "apikey.json"), "utf8")).api_key;
 }
 
 export default {
