@@ -22,6 +22,10 @@ const rateLimiter = new RateLimiterMemory({
 
 // app.use(helmet());
 app.use((req, res, next) => {
+    console.log("Received request");
+    next();
+});
+app.use((req, res, next) => {
     rateLimiter
         .consume(req.ip)
         .then(() => {
