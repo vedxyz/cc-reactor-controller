@@ -5,7 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "dockerize": "docker build . -t node-cc-reactor-server",
+    "docker": "docker run -p 3000:3000 node-cc-reactor-server",
+    "start": "node build/app.js"
   },
   "author": "Ved",
   "license": "ISC",
@@ -22,5 +25,6 @@
     "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.3.0"
-  }
+  },
+  "type": "module"
 }

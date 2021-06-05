@@ -12,7 +12,7 @@ import https from "https";
 import helmet from "helmet";
 import { RateLimiterMemory } from "rate-limiter-flexible";
 import path from "path";
-import fsutils from "./fsutils";
+import fsutils from "./fsutils.js";
 const app = express();
 const httpsCredentials = {
     key: fsutils.getHttpsCredential("privkey.pem"),

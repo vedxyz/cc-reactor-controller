@@ -2,8 +2,7 @@ import express from "express";
 import https from "https";
 import helmet from "helmet";
 import { RateLimiterMemory } from "rate-limiter-flexible";
-import path from "path";
-import fsutils from "./fsutils";
+import fsutils from "./fsutils.js";
 
 const app = express();
 
@@ -29,7 +28,7 @@ app.use((req, res, next) => {
             res.status(429).send("Too Many Requests");
         });
 });
-app.use("/scripts", express.static(path.join("..", "scripts")));
+app.use("/scripts", express.static(fsutils.getScriptsDirPath()));
 
 app.get("/getscripts", async (req, res) => {
     res.send(
