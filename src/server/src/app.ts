@@ -20,7 +20,7 @@ const rateLimiter = new RateLimiterMemory({
     duration: 1,
 });
 
-app.use(helmet());
+// app.use(helmet());
 app.use((req, res, next) => {
     rateLimiter
         .consume(req.ip)
