@@ -25,7 +25,7 @@ const rateLimiter = new RateLimiterMemory({
 app.use(helmet());
 app.use(cors());
 app.use((req, res, next) => {
-    console.log("Received request");
+    console.log("Received request from " + req.ip);
     next();
 });
 app.use((req, res, next) => {
@@ -44,8 +44,11 @@ app.use("/scripts", express.static(fsutils.getScriptsDirPath()));
 
 app.get("/getscripts", async (req, res) => {
     res.send(
-        (await fsutils.getScriptAddresses()).map(
-            (script) => `https://${host}:${port}/scripts/${script}`
+        new Map(
+            (await fsutils.getScriptAddresses()).map((script) => [
+                script,
+                `https://${host}:${port}/scripts/${script}`,
+            ])
         )
     );
 });
@@ -63,7 +66,9 @@ app.post("/savescript", (req, res) => {
 
         if (req.body.name && req.body.content) {
             fsutils.saveScript(req.body.name, req.body.content);
-            res.status(200).send(`https://${host}:${port}/scripts/${req.body.name}`);
+            res.status(200).send(
+                `https://${host}:${port}/scripts/${req.body.name}`
+            );
         } else {
             res.status(400).send("Bad Request");
         }

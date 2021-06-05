@@ -4,7 +4,10 @@
         "colors",
         "shell",
         "term",
-        "paintutils"
+        "paintutils",
+        "http",
+        "textutils",
+        "fs"
     ],
     "Lua.diagnostics.disable": [
         "trailing-space"
