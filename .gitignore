@@ -1,3 +1,4 @@
 src/server/certificates/**
 src/server/node_modules/
+src/server/src/apikey.json
 

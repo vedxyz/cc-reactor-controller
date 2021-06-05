@@ -3,13 +3,16 @@ import https from "https";
 import helmet from "helmet";
 import { RateLimiterMemory } from "rate-limiter-flexible";
 import fsutils from "./fsutils.js";
+import { api_key } from "./apikey.json";
 
 const app = express();
+const host = "new.vedat.xyz";
+const port = 3000;
 
 const httpsCredentials = {
     key: fsutils.getHttpsCredential("privkey.pem"),
     cert: fsutils.getHttpsCredential("cert.pem"),
-}
+};
 
 const rateLimiter = new RateLimiterMemory({
     keyPrefix: "middleware",
@@ -28,20 +31,37 @@ app.use((req, res, next) => {
             res.status(429).send("Too Many Requests");
         });
 });
+app.use(express.json());
 app.use("/scripts", express.static(fsutils.getScriptsDirPath()));
 
 app.get("/getscripts", async (req, res) => {
     res.send(
         (await fsutils.getScriptAddresses()).map(
-            (script) => "https://new.vedat.xyz:3000/scripts/" + script
+            (script) => `https://${host}:${port}/scripts/${script}`
         )
     );
 });
 
 app.post("/savescript", (req, res) => {
-    req.headers.authorization;
+    if (!req.headers.authorization) {
+        res.status(401).send("Authentication Required");
+    } else {
+        const [type, credentials] = [...req.headers.authorization.split(" ")];
+
+        if (type.toLowerCase() !== "basic" || credentials !== api_key) {
+            res.status(403).send("Forbidden");
+            return;
+        }
+
+        if (req.body.name && req.body.content) {
+            fsutils.saveScript(req.body.name, req.body.content);
+            res.status(200).send(`https://${host}:${port}/scripts/${req.body.name}`);
+        } else {
+            res.status(400).send("Bad Request");
+        }
+    }
 });
 
-https.createServer(httpsCredentials, app).listen(3000, () => {
-    console.log("Listening on port 3000.");
-})
+https.createServer(httpsCredentials, app).listen(port, () => {
+    console.log(`Listening on port ${port}.`);
+});
