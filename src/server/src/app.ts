@@ -1,5 +1,6 @@
 import express from "express";
 import https from "https";
+import cors from "cors";
 import helmet from "helmet";
 import { RateLimiterMemory } from "rate-limiter-flexible";
 import fsutils from "./fsutils.js";
@@ -20,7 +21,8 @@ const rateLimiter = new RateLimiterMemory({
     duration: 1,
 });
 
-// app.use(helmet());
+app.use(helmet());
+app.use(cors());
 app.use((req, res, next) => {
     console.log("Received request");
     next();
