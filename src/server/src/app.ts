@@ -3,11 +3,11 @@ import https from "https";
 import helmet from "helmet";
 import { RateLimiterMemory } from "rate-limiter-flexible";
 import fsutils from "./fsutils.js";
-import { api_key } from "./apikey.json";
 
 const app = express();
 const host = "new.vedat.xyz";
 const port = 3000;
+const apiKey = fsutils.getApiKey();
 
 const httpsCredentials = {
     key: fsutils.getHttpsCredential("privkey.pem"),
@@ -48,7 +48,7 @@ app.post("/savescript", (req, res) => {
     } else {
         const [type, credentials] = [...req.headers.authorization.split(" ")];
 
-        if (type.toLowerCase() !== "basic" || credentials !== api_key) {
+        if (type.toLowerCase() !== "basic" || credentials !== apiKey) {
             res.status(403).send("Forbidden");
             return;
         }

@@ -26,9 +26,14 @@ const getScriptsDirPath = (): string => {
     return path.join(__dirname, "..", "scripts");
 }
 
+const getApiKey = (): string => {
+    return JSON.parse(readFileSync(path.join(__dirname, "apikey.json"), "utf8")).api_key;
+}
+
 export default {
     saveScript,
     getScriptAddresses,
     getHttpsCredential,
     getScriptsDirPath,
+    getApiKey,
 };
