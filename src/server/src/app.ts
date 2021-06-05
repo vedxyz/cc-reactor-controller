@@ -29,6 +29,7 @@ app.use((req, res, next) => {
         })
         .catch(() => {
             res.status(429).send("Too Many Requests");
+            console.log("-> Too many requests from " + req.ip);
         });
 });
 app.use(express.json());
