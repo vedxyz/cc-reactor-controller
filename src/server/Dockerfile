@@ -1,14 +1,12 @@
 FROM node:14
-
 WORKDIR /usr/src/app
 
-COPY package*.json ./
-RUN npm install
-RUN npm install typescript -g
+COPY --chown=node:node package*.json .
+RUN npm install && npm install typescript -g
 
-COPY . .
+COPY --chown=node:node . .
 RUN npm run build
 
+USER node
 EXPOSE 3000
-
 CMD [ "node", "build/app.js" ]

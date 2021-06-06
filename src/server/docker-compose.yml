@@ -1,0 +1,11 @@
+services:
+    server:
+        build: .
+        init: true
+        ports:
+            - "3000:3000"
+        volumes:
+            - cc-server-scripts:/usr/src/app/scripts
+
+volumes:
+    cc-server-scripts: {}

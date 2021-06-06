@@ -3,10 +3,21 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const scriptsDir = path.join(__dirname, "..", "scripts");
 
 const saveScript = async (name: string, content: string): Promise<boolean> => {
     try {
-        await fs.writeFile(path.join(__dirname, "..", "scripts", name), content);
+        await fs.writeFile(path.join(scriptsDir, name), content);
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+};
+
+const deleteScript = async (name: string): Promise<boolean> => {
+    try {
+        await fs.rm(path.join(__dirname, "..", name));
         return true;
     } catch (error) {
         console.error(error);
@@ -15,25 +26,22 @@ const saveScript = async (name: string, content: string): Promise<boolean> => {
 };
 
 const getScriptAddresses = async (): Promise<string[]> => {
-    return await fs.readdir(path.join(__dirname, "..", "scripts"));
+    return await fs.readdir(scriptsDir);
 };
 
 const getHttpsCredential = (certificate: string): string => {
     return readFileSync(path.join(__dirname, "..", "certificates", certificate), "utf8");
 };
 
-const getScriptsDirPath = (): string => {
-    return path.join(__dirname, "..", "scripts");
-}
-
 const getApiKey = (): string => {
-    return JSON.parse(readFileSync(path.join(__dirname, "..", "certificates", "apikey.json"), "utf8")).api_key;
+    return JSON.parse(getHttpsCredential("apikey.json")).api_key;
 }
 
 export default {
+    scriptsDir,
     saveScript,
+    deleteScript,
     getScriptAddresses,
     getHttpsCredential,
-    getScriptsDirPath,
     getApiKey,
 };

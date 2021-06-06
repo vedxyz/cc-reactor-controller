@@ -2,12 +2,12 @@
   "name": "cc-reactor-server",
   "version": "1.0.0",
   "description": "",
+  "sslDir": "/etc/letsencrypt/live/vedat.xyz/{cert,chain,privkey}.pem",
   "main": "app.js",
   "scripts": {
     "build": "tsc",
-    "dockerize": "docker build . -t node-cc-reactor-server",
-    "docker": "docker run -it --init -v cc-server-scripts:/usr/src/app/scripts -p 3000:3000 --name cc-reactor-server node-cc-reactor-server",
-    "restart-docker": "sudo docker stop cc-reactor-server && sudo docker rm cc-reactor-server && sudo npm run dockerize && sudo npm run docker",
+    "docker": "sudo docker-compose up",
+    "copy-ssl-cert": "sudo cp $npm_package_sslDir ./certificates/",
     "start": "node build/app.js"
   },
   "author": "Ved",

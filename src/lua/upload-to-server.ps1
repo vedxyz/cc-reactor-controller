@@ -5,8 +5,8 @@ $Uploads = @{}
 foreach ($File in $Files) {
     
     $Uploads.Add($File.Name, (Invoke-RestMethod `
-    -Method POST `
-    -Uri https://new.vedat.xyz/savescript `
+    -Method PUT `
+    -Uri https://new.vedat.xyz:3000/scripts `
     -Authentication Bearer `
     -Token ((Get-Content ../server/certificates/apikey.json | ConvertFrom-Json).api_key | ConvertTo-SecureString -AsPlainText -Force) `
     -ContentType "application/json" `

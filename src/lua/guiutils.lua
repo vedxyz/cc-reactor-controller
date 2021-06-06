@@ -11,6 +11,7 @@ end
 local function drawBox (monitor, x, y, width, height)
     
     local computerTerm = term.redirect(monitor)
+    local something = ""
     
     paintutils.drawBox(x, y, x + width - 1, y + height - 1, colors.lightBlue)
     monitor.setBackgroundColor(colors.black)

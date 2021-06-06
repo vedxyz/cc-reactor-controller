@@ -40,9 +40,26 @@ app.use((req, res, next) => {
         });
 });
 app.use(express.json());
-app.use("/scripts", express.static(fsutils.getScriptsDirPath()));
+app.use("/scripts", express.static(fsutils.scriptsDir));
+app.use("/scripts", (req, res, next) => {
+    if (req.method == "PUT" || req.method == "DELETE") {
+        if (!req.headers.authorization) {
+            res.status(401).send("Authentication Required");
+        } else {
+            const [type, credentials] = [...req.headers.authorization.split(" ")];
+    
+            if (type.toLowerCase() !== "bearer" || credentials !== apiKey) {
+                res.status(403).send("Forbidden");
+            } else {
+                next();
+            }
+        }
+    } else {
+        next();
+    }
+});
 
-app.get("/getscripts", async (req, res) => {
+app.get("/scripts", async (req, res) => {
     res.send(
         (await fsutils.getScriptAddresses()).reduce(
             (acc, cur) => ({
@@ -54,25 +71,23 @@ app.get("/getscripts", async (req, res) => {
     );
 });
 
-app.post("/savescript", (req, res) => {
-    if (!req.headers.authorization) {
-        res.status(401).send("Authentication Required");
+app.put("/scripts", (req, res) => {
+    if (req.body.name && req.body.content) {
+        fsutils.saveScript(req.body.name, req.body.content);
+        res.status(200).send(
+            `https://${host}:${port}/scripts/${req.body.name}`
+        );
     } else {
-        const [type, credentials] = [...req.headers.authorization.split(" ")];
+        res.status(400).send("Bad Request");
+    }
+});
 
-        if (type.toLowerCase() !== "bearer" || credentials !== apiKey) {
-            res.status(403).send("Forbidden");
-            return;
-        }
-
-        if (req.body.name && req.body.content) {
-            fsutils.saveScript(req.body.name, req.body.content);
-            res.status(200).send(
-                `https://${host}:${port}/scripts/${req.body.name}`
-            );
-        } else {
-            res.status(400).send("Bad Request");
-        }
+app.delete("/scripts", (req, res) => {
+    if (req.body.name) {
+        fsutils.deleteScript(req.body.name);
+        res.status(200).send("Deleted " + req.body.name);
+    } else {
+        res.status(400).send("Bad Request");
     }
 });
 
