@@ -10,5 +10,5 @@ COPY --chown=node:node . .
 RUN npm run build
 
 EXPOSE 3000
-USER node
+# USER node # This just isn't working, results in EACCES no matter what.
 CMD [ "node", "build/app.js" ]
