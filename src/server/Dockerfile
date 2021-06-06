@@ -1,7 +1,7 @@
 FROM node:14
 WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json .
+COPY --chown=node:node package*.json ./
 RUN npm install && npm install typescript -g
 
 COPY --chown=node:node . .
