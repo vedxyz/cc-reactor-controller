@@ -17,7 +17,7 @@ const saveScript = async (name: string, content: string): Promise<boolean> => {
 
 const deleteScript = async (name: string): Promise<boolean> => {
     try {
-        await fs.rm(path.join(__dirname, "..", name));
+        await fs.rm(path.join(scriptsDir, name));
         return true;
     } catch (error) {
         console.error(error);
