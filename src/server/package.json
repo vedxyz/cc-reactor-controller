@@ -1,7 +1,8 @@
 {
   "name": "cc-reactor-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Server for the cc-reactor project",
+  "repository": "github:vedattt/cc-reactor-controller",
   "sslDir": "/etc/letsencrypt/live/vedat.xyz/{cert,chain,privkey}.pem",
   "main": "app.js",
   "scripts": {

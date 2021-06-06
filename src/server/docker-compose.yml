@@ -5,7 +5,7 @@ services:
         ports:
             - "3000:3000"
         volumes:
-            - cc-server-scripts:/usr/src/app/scripts
+            - cc-server-scripts:/home/node/server/scripts
 
 volumes:
     cc-server-scripts: {}
