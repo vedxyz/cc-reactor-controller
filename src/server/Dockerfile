@@ -1,5 +1,5 @@
 FROM node:14
-WORKDIR /usr/src/app
+WORKDIR /home/node/server
 
 COPY --chown=node:node package*.json ./
 RUN npm install && npm install typescript -g
