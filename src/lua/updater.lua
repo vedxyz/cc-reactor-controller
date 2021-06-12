@@ -5,7 +5,7 @@ for key, value in pairs(scriptUrls) do
     
     local file = fs.open(shell.dir().."/"..key, "w")
     file.write(http.get(value).readAll())
-    file.close(key)
+    file.close()
     
     print("Downloaded: "..key)
     

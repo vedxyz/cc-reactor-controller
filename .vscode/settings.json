@@ -8,7 +8,10 @@
         "http",
         "textutils",
         "fs",
-        "window"
+        "window",
+        "rednet",
+        "parallel",
+        "settings"
     ],
     "Lua.diagnostics.disable": [
         "trailing-space"
