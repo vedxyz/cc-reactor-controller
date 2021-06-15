@@ -1,5 +1,6 @@
 import express from "express";
 import https from "https";
+import WebSocket from "ws";
 import cors from "cors";
 import helmet from "helmet";
 import { RateLimiterMemory } from "rate-limiter-flexible";
@@ -91,8 +92,21 @@ app.delete("/scripts", (req, res) => {
     }
 });
 
+const server = https.createServer(httpsCredentials, app)
+const wss = new WebSocket.Server({ server })
 
+wss.on("connection", ws => {
+    
+    ws.on("message", message => {
+        
+        console.log("Received; %s", message)
+        
+    });
+    
+    ws.send("Test?")
+    
+});
 
-https.createServer(httpsCredentials, app).listen(port, () => {
+server.listen(port, () => {
     console.log(`Listening on port ${port}.`);
 });
