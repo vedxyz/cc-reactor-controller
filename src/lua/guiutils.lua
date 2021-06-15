@@ -244,21 +244,22 @@ local function drawMainTab (window, datatable, hostdata)
         addKeyValuePair(window, x, y + 3, "Max Rate", fTable["Max Burn Rate"].." mB/t")
         
         addKeyValuePair(window, x, y + 5, "Coolant", fTable["Coolant Type"])
-        addKeyValuePair(window, x, y + 6, "Amount", fTable["Coolant Amount"].." / "..fTable["Coolant Capacity"])
-        addKeyValuePair(window, x, y + 7, "Heated Coolant", fTable["Heated Coolant Type"])
-        addKeyValuePair(window, x, y + 8, "Amount", fTable["Heated Coolant Amount"].." / "..fTable["Heated Coolant Capacity"])
+        addKeyValuePair(window, x, y + 6, "Amount", fTable["Coolant Amount"])
+        addKeyValuePair(window, x, y + 7, "Capacity", fTable["Coolant Capacity"])
         
-        addKeyValuePair(window, x, y + 10, "Fuel", fTable["Fuel"].." / "..fTable["Fuel Capacity"])
-        addKeyValuePair(window, x, y + 11, "Waste", fTable["Waste"].." / "..fTable["Waste Capacity"])
+        addKeyValuePair(window, x, y + 9, "Heated Coolant", fTable["Heated Coolant Type"])
+        addKeyValuePair(window, x, y + 10, "Amount", fTable["Heated Coolant Amount"])
+        addKeyValuePair(window, x, y + 11, "Capacity", fTable["Heated Coolant Capacity"])
         
-        addKeyValuePair(window, x, y + 13, "Heating Rate", fTable["Heating Rate"])
-        addKeyValuePair(window, x, y + 14, "Temperature", roundToPlaces(fTable["Temperature"], 2).." K")
-        addKeyValuePair(window, x, y + 15, "Max Temperature", fTable["Max Temperature"])
+        addKeyValuePair(window, x, y + 13, "Fuel", fTable["Fuel"].." / "..fTable["Fuel Capacity"])
+        addKeyValuePair(window, x, y + 14, "Waste", fTable["Waste"].." / "..fTable["Waste Capacity"])
         
-        addKeyValuePair(window, x, y + 17, "Damage Percent", fTable["Damage Percent"].." %")
-        addKeyValuePair(window, x, y + 18, "Environmental Loss", roundToPlaces(fTable["Environmental Loss"], 3))
+        addKeyValuePair(window, x, y + 16, "Heating Rate", fTable["Heating Rate"])
+        addKeyValuePair(window, x, y + 17, "Temperature", roundToPlaces(fTable["Temperature"], 2).." K")
+        addKeyValuePair(window, x, y + 18, "Max Temperature", fTable["Max Temperature"])
         
-        addKeyValuePair(window, x, y + 20, "Boil Efficiency", fTable["Boil Efficiency"])
+        addKeyValuePair(window, x, y + 20, "Damage Percent", fTable["Damage Percent"].." %")
+        addKeyValuePair(window, x, y + 21, "Environmental Loss", roundToPlaces(fTable["Environmental Loss"], 3))
         
     end
     

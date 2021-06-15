@@ -1,10 +1,10 @@
 
 local protocol = "ccmekanismreactor"
-local maxTypeId = 4
+local defaultMaxTypeId = 6
 
 local function getAvailableHostname (hosttype)
     
-    for i = 1, maxTypeId do
+    for i = 1, defaultMaxTypeId do
         
         if rednet.lookup(protocol, hosttype.."_"..i) == nil then
             
@@ -44,19 +44,33 @@ local function requestGetter (dataserverid)
     
 end
 
-local function getServers (hosttype)
+local function isHostAlive (id)
+    
+    rednet.send(id, "health_check", protocol)
+    
+    local _id, msg = rednet.receive(protocol)
+    
+    return msg
+    
+end
+
+local function getServers (hosttype, maxTypeId)
     
     if hosttype == "ALL" then
-        return { unpack(getServers("turbine")), unpack(getServers("imatrix")), unpack(getServers("reactor")) }
+        return { 
+            unpack(getServers("turbine", maxTypeId)), 
+            unpack(getServers("imatrix", maxTypeId)), 
+            unpack(getServers("reactor", maxTypeId)),
+        }
     end
     
     local servers = {}
     
-    for i = 1, maxTypeId do
+    for i = 1, maxTypeId or defaultMaxTypeId do
         
         local lookup = rednet.lookup(protocol, hosttype.."_"..i)
         
-        if  lookup ~= nil then
+        if lookup ~= nil then
             
             table.insert(servers, { id = lookup, hostname = hosttype.."_"..i, hosttype = hosttype })
             
@@ -108,4 +122,5 @@ return {
     setupModem = setupModem,
     sendReactorStatusChange = sendReactorStatusChange,
     sendBurnRateChange = sendBurnRateChange,
+    isHostAlive = isHostAlive,
 }

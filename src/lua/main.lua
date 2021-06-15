@@ -15,6 +15,13 @@ local netutils = require "netutils"
 local monitor = peripheral.find("monitor")
 
 term.clear()
+monitor.setTextScale(1)
+monitor.clear()
+
+gui.addText(monitor, "Right-click anywhere", 2, 10, colors.white)
+gui.addText(monitor, "to start...", 2, 11, colors.white)
+os.pullEvent("monitor_touch")
+
 monitor.setTextScale(0.5)
 monitor.clear()
 
@@ -30,7 +37,8 @@ print("Setting up modem")
 netutils.setupModem()
 
 print("Getting all data server ids")
-local servers = netutils.getServers("ALL")
+local maxTypeId = settings.get("ccmreactor.peripheral_type_max_qty")
+local servers = netutils.getServers("ALL", maxTypeId)
 local activeTab = 1
 local activeTabData
 local visibleindex = 1
@@ -51,7 +59,7 @@ local function drawGUI ()
     
     while true do
         
-        if activeTabData ~= nil then
+        if activeTabData ~= nil and next(activeTabData) ~= nil then
             
             gui.drawTablist(tabWindow, servers, visibleindex)
             
@@ -103,8 +111,8 @@ end
 print("Starting event loop")
 while true do
     
-    if #servers == 0 then
-        servers = netutils.getServers("ALL")
+    if servers == nil or next(servers) == nil then
+        servers = netutils.getServers("ALL", maxTypeId)
         os.sleep(2)
     else
         parallel.waitForAny(

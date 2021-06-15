@@ -15,7 +15,13 @@ local peripheralType = settings.get("ccmreactor.peripheral_type")
 local periph = peripheral.wrap(settings.get("ccmreactor.peripheral_side"))
 
 local modem = netutils.setupModem()
-local hostname = netutils.getAvailableHostname(peripheralType)
+local hostname
+
+if settings.get("ccmreactor.hostname_allocation") == "static" then
+    hostname = peripheralType.."_"..settings.get("ccmreactor.hostname_static_id")
+else
+    hostname = netutils.getAvailableHostname(peripheralType)
+end
 
 rednet.host(netutils.protocol, hostname)
 
@@ -30,6 +36,10 @@ while true do
     if msg == "get" then
         
         rednet.send(id, netutils.compileGetters(periph), netutils.protocol)
+        
+    elseif msg == "health_check" then
+        
+        rednet.send(id, true, netutils.protocol)
         
     elseif msg == "activate" and peripheralType == "reactor" then
         periph.activate()
