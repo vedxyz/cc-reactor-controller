@@ -95,15 +95,27 @@ app.delete("/scripts", (req, res) => {
 const server = https.createServer(httpsCredentials, app)
 const wss = new WebSocket.Server({ server })
 
-wss.on("connection", ws => {
+wss.on("connection", (ws, req) => {
+    
+    let interval: NodeJS.Timeout;
     
     ws.on("message", message => {
         
-        console.log("Received; %s", message)
+        console.log(message)
         
     });
     
-    ws.send("Test?")
+    if (req.headers["X-Is-CC-Computer"] === "true") {
+        
+        interval = setInterval(() => {
+            ws.send("get_data")
+        }, 5000);
+        
+    }
+    
+    ws.on("close", () => {
+        if (interval) clearInterval(interval);
+    });
     
 });
 

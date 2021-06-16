@@ -108,6 +108,31 @@ local function initButtonEvents ()
     
 end
 
+local ws
+
+local function initWebClientEvents ()
+    
+    if ws ~= nil then
+        
+        local msg = ws.receive()
+        
+        if msg == "get_data" then
+            ws.send(textutils.serializeJSON({
+                allServers = servers,
+                server = servers[activeTab],
+                data = activeTabData,
+            }))
+        end
+        
+    else
+        
+        print("Opening web socket...")
+        ws = netutils.openWebSocket()
+        
+    end
+    
+end
+
 print("Starting event loop")
 while true do
     
@@ -118,7 +143,8 @@ while true do
         parallel.waitForAny(
             dataServerEvents,
             drawGUI,
-            initButtonEvents
+            initButtonEvents,
+            initWebClientEvents
         )
     end
     

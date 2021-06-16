@@ -113,6 +113,12 @@ local function sendBurnRateChange (dataserverid, burnrate)
     
 end
 
+local function openWebSocket ()
+    
+    return http.websocket("wss://new.vedat.xyz:3000/", { ["X-Is-CC-Computer"] = "true" })
+    
+end
+
 return {
     protocol = protocol,
     getAvailableHostname = getAvailableHostname,
@@ -123,4 +129,5 @@ return {
     sendReactorStatusChange = sendReactorStatusChange,
     sendBurnRateChange = sendBurnRateChange,
     isHostAlive = isHostAlive,
+    openWebSocket = openWebSocket,
 }
