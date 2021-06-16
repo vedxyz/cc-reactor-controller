@@ -143,8 +143,7 @@ while true do
         parallel.waitForAny(
             dataServerEvents,
             drawGUI,
-            initButtonEvents,
-            initWebClientEvents
+            initButtonEvents
         )
     end
     
