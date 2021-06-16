@@ -4,9 +4,10 @@ For ComputerCraft (& Advanced Peripherals) & Mekanism, ~~featuring web server an
 
 There is however, a pastebin-like Node.js server implementation which was immensely helpful during the development process.
 
-![Screenshot of Main Computer]()
+![Screenshot of Main Computer](https://i.imgur.com/xTBcP4F.png)
+Interacting with the monitor (right-clicking) is possible. You can scroll through and switch to tabs. Reactor tabs will have the options seen above, for changing the state and burn rate. When trying to set the burn rate, the computer will open a prompt for you to input the new burn rate value (which means you need to open the computer's GUI for this).
 
-![Screenshot of Peripheral Data Server]()
+![Screenshot of Peripheral Data Server](https://i.imgur.com/einCRkM.png)
 
 ----------
 
